@@ -9,7 +9,7 @@ import {
   Truck,
   Wallet,
 } from "lucide-react";
-import heroMerchant from "@/assets/hero-merchant.png";
+import heroTree from "@/assets/hero-tree.png";
 import { SiteNavbar } from "@/components/SiteNavbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CountUp, Reveal } from "@/components/Reveal";
@@ -125,11 +125,11 @@ function Home() {
             <div className="relative mx-auto max-w-md">
               <div className="absolute inset-x-6 bottom-6 top-10 rounded-full opacity-90 bg-brand" aria-hidden />
               <img
-                src={heroMerchant}
-                alt="بايع سعودي يستخدم منصة بايع للتجارة الإلكترونية"
+                src={heroTree}
+                alt="شجرة رقمية متفرعة ترمز لتنوع التجارة الإلكترونية على منصة بايع"
                 width={1024}
-                height={1280}
-                className="relative z-10 w-full object-contain drop-shadow-xl"
+                height={1024}
+                className="relative z-10 w-full rounded-3xl object-contain drop-shadow-xl"
               />
               <div className="absolute top-16 right-0 z-20 animate-float rounded-2xl bg-card px-4 py-3 text-sm font-bold shadow-card">
                 +45,000 بائع نشط
