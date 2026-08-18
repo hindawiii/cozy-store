@@ -23,7 +23,7 @@ export function SiteFooter() {
     <footer className="bg-ink text-background">
       <div className="container-page grid gap-10 py-16 md:grid-cols-4">
         <div className="space-y-4">
-          <div className="text-2xl font-extrabold text-brand">تاجر</div>
+          <div className="text-2xl font-extrabold text-brand">بايع</div>
           <p className="text-sm leading-8 opacity-70">
             منصة متكاملة للتجارة الإلكترونية تتيح لك البيع بدون رأس مال أو مخزون، ونحن نتولى التخزين
             والشحن والتحصيل.
@@ -86,7 +86,7 @@ export function SiteFooter() {
 
       <div className="border-t border-background/10">
         <div className="container-page flex flex-col items-center justify-between gap-4 py-6 text-xs opacity-60 md:flex-row">
-          <p>© 2026 تاجر. جميع الحقوق محفوظة.</p>
+          <p>© 2026 بايع. جميع الحقوق محفوظة.</p>
           <div className="flex gap-3">
             {["Visa", "Mastercard", "مدى", "Apple Pay", "STC Pay"].map((p) => (
               <span key={p} className="rounded-md bg-background/10 px-3 py-1">

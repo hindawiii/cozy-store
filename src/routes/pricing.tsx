@@ -14,12 +14,12 @@ import {
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "الأسعار والباقات | تاجر" },
+      { title: "الأسعار والباقات | بايع" },
       {
         name: "description",
-        content: "باقات تاجر: ابدأ مجاناً وادفع فقط عند البيع، أو اشترك في باقة النمو والأعمال.",
+        content: "باقات بايع: ابدأ مجاناً وادفع فقط عند البيع، أو اشترك في باقة النمو والأعمال.",
       },
-      { property: "og:title", content: "الأسعار والباقات | تاجر" },
+      { property: "og:title", content: "الأسعار والباقات | بايع" },
       { property: "og:description", content: "ابدأ مجاناً وطوّر تجارتك بباقات مرنة تناسب حجمك." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -72,7 +72,7 @@ function PricingPage() {
 
       <section className="container-page pt-32 pb-20 text-center">
         <h1 className="text-3xl font-extrabold md:text-4xl">
-          باقات تناسب <span className="text-brand">كل تاجر</span>
+          باقات تناسب <span className="text-brand">كل بايع</span>
         </h1>
         <p className="mt-3 text-muted-foreground">ابدأ مجاناً وارتقِ عندما تكبر مبيعاتك</p>
       </section>
