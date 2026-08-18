@@ -12,12 +12,12 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { categories, products, profitPct } from "@/lib/store-data";
 
-type Search = { cat?: string };
+type ProductSearch = { cat?: string | undefined };
 
 export const Route = createFileRoute("/products")({
-  validateSearch: (search: Record<string, unknown>): Search => ({
-    cat: typeof search.cat === "string" ? search.cat : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): ProductSearch =>
+    typeof search["cat"] === "string" ? { cat: search["cat"] } : {},
+
   head: () => ({
     meta: [
       { title: "كتالوج المنتجات | تاجر" },
