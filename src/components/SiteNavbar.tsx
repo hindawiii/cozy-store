@@ -31,7 +31,7 @@ export function SiteNavbar() {
     >
       <nav className="container-page flex h-20 items-center justify-between gap-4">
         <Link to="/" className="text-2xl font-extrabold">
-          <span className="text-brand">تاجر</span>
+          <span className="text-brand">بايع</span>
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">

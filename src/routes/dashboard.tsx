@@ -26,12 +26,12 @@ import { products, profitPct } from "@/lib/store-data";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "لوحة تحكم التاجر | تاجر" },
+      { title: "لوحة تحكم التاجر | بايع" },
       {
         name: "description",
-        content: "تابع طلباتك وأرباحك ومنتجاتك الأكثر مبيعاً من لوحة تحكم تاجر.",
+        content: "تابع طلباتك وأرباحك ومنتجاتك الأكثر مبيعاً من لوحة تحكم بايع.",
       },
-      { property: "og:title", content: "لوحة تحكم التاجر | تاجر" },
+      { property: "og:title", content: "لوحة تحكم التاجر | بايع" },
       { property: "og:description", content: "إحصائيات الطلبات والأرباح والمنتجات في مكان واحد." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

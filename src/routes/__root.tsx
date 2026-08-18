@@ -79,15 +79,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "تاجر | منصة التجارة الإلكترونية" },
+      { title: "بايع | منصة التجارة الإلكترونية" },
       {
         name: "description",
-        content: "ابدأ تجارتك الإلكترونية بدون رأس مال مع منصة تاجر: منتجات وشحن وتحصيل وأرباح.",
+        content: "ابدأ تجارتك الإلكترونية بدون رأس مال مع منصة بايع: منتجات وشحن وتحصيل وأرباح.",
       },
-      { property: "og:title", content: "تاجر | منصة التجارة الإلكترونية" },
+      { property: "og:title", content: "بايع | منصة التجارة الإلكترونية" },
       {
         property: "og:description",
-        content: "ابدأ تجارتك الإلكترونية بدون رأس مال مع منصة تاجر.",
+        content: "ابدأ تجارتك الإلكترونية بدون رأس مال مع منصة بايع.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap",
       },
       {
         rel: "stylesheet",

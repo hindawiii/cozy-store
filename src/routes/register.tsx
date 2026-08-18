@@ -12,13 +12,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/register")({
   head: () => ({
     meta: [
-      { title: "إنشاء حساب | تاجر" },
+      { title: "إنشاء حساب | بايع" },
       {
         name: "description",
-        content: "أنشئ حساب تاجر مجاناً في دقائق وابدأ البيع بدون رأس مال أو مخزون.",
+        content: "أنشئ حساب بايع مجاناً في دقائق وابدأ البيع بدون رأس مال أو مخزون.",
       },
-      { property: "og:title", content: "إنشاء حساب | تاجر" },
-      { property: "og:description", content: "سجّل مجاناً وابدأ البيع خلال دقائق مع منصة تاجر." },
+      { property: "og:title", content: "إنشاء حساب | بايع" },
+      { property: "og:description", content: "سجّل مجاناً وابدأ البيع خلال دقائق مع منصة بايع." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

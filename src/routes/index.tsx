@@ -9,7 +9,7 @@ import {
   Truck,
   Wallet,
 } from "lucide-react";
-import heroMerchant from "@/assets/hero-merchant.png";
+import heroTree from "@/assets/hero-tree.png";
 import { SiteNavbar } from "@/components/SiteNavbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CountUp, Reveal } from "@/components/Reveal";
@@ -19,13 +19,13 @@ import { categories, products, profitPct } from "@/lib/store-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "تاجر | ابدأ تجارتك الإلكترونية بدون رأس مال" },
+      { title: "بايع | ابدأ تجارتك الإلكترونية بدون رأس مال" },
       {
         name: "description",
         content:
-          "منصة تاجر: اختر من آلاف المنتجات، سوّق عبر السوشيال ميديا، ونحن نتولى التخزين والشحن والتحصيل وتحويل أرباحك.",
+          "منصة بايع: اختر من آلاف المنتجات، سوّق عبر السوشيال ميديا، ونحن نتولى التخزين والشحن والتحصيل وتحويل أرباحك.",
       },
-      { property: "og:title", content: "تاجر | ابدأ تجارتك الإلكترونية بدون رأس مال" },
+      { property: "og:title", content: "بايع | ابدأ تجارتك الإلكترونية بدون رأس مال" },
       {
         property: "og:description",
         content: "أكثر من ٥٠٠٠ منتج في ٢٠ قسم، شحن وتحصيل كامل، وأرباح تصلك بعد التسليم.",
@@ -71,7 +71,7 @@ const testimonials = [
   {
     n: "محمد الشريف",
     c: "جدة، السعودية",
-    q: "أفضل شي في تاجر إن الشحن والتحصيل مو شغلي. أنا بس أسوّق وأتابع الطلبات من لوحة التحكم.",
+    q: "أفضل شي في بايع إن الشحن والتحصيل مو شغلي. أنا بس أسوّق وأتابع الطلبات من لوحة التحكم.",
   },
   {
     n: "نورة الحربي",
@@ -102,11 +102,11 @@ function Home() {
               منصة متكاملة لتقديم حلول التجارة الإلكترونية
             </span>
             <h1 className="mt-6 text-4xl font-extrabold text-foreground md:text-5xl">
-              تاجر فرصتك لبداية مشروعك في{" "}
+              بايع فرصتك لبداية مشروعك في{" "}
               <span className="text-brand">التجارة الإلكترونية</span> من أي مكان
             </h1>
             <p className="mt-5 max-w-xl text-base text-muted-foreground">
-              سواء تريد بداية مشروع جديد أو توسّع تجارتك الحالية، تقدر تستفيد بخدمات تاجر المتنوعة
+              سواء تريد بداية مشروع جديد أو توسّع تجارتك الحالية، تقدر تستفيد بخدمات بايع المتنوعة
               التي تساعدك في تحقيق أعلى مستوى من النجاح والأرباح بأقل تكلفة.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -125,11 +125,11 @@ function Home() {
             <div className="relative mx-auto max-w-md">
               <div className="absolute inset-x-6 bottom-6 top-10 rounded-full opacity-90 bg-brand" aria-hidden />
               <img
-                src={heroMerchant}
-                alt="تاجر سعودي يستخدم منصة تاجر للتجارة الإلكترونية"
+                src={heroTree}
+                alt="شجرة رقمية متفرعة ترمز لتنوع التجارة الإلكترونية على منصة بايع"
                 width={1024}
-                height={1280}
-                className="relative z-10 w-full object-contain drop-shadow-xl"
+                height={1024}
+                className="relative z-10 w-full rounded-3xl object-contain drop-shadow-xl"
               />
               <div className="absolute top-16 right-0 z-20 animate-float rounded-2xl bg-card px-4 py-3 text-sm font-bold shadow-card">
                 +45,000 بائع نشط
@@ -170,9 +170,9 @@ function Home() {
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-extrabold md:text-4xl">
-              مش هنخليك تشيل الهم! <span className="text-brand">تاجر هتحلها</span>
+              مش هنخليك تشيل الهم! <span className="text-brand">بايع هتحلها</span>
             </h2>
-            <p className="mt-3 text-muted-foreground">تاجر أسهل طريقة لبدء تجارتك الإلكترونية</p>
+            <p className="mt-3 text-muted-foreground">بايع أسهل طريقة لبدء تجارتك الإلكترونية</p>
           </Reveal>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -195,7 +195,7 @@ function Home() {
       <section className="py-24">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl">كيف تبدأ مع تاجر؟</h2>
+            <h2 className="text-3xl font-extrabold md:text-4xl">كيف تبدأ مع بايع؟</h2>
             <p className="mt-3 text-muted-foreground">أربع خطوات بسيطة تفصلك عن أول ربح</p>
           </Reveal>
 
@@ -222,7 +222,7 @@ function Home() {
         <div className="container-page grid items-center gap-12 md:grid-cols-2">
           <Reveal>
             <span className="rounded-full bg-accent px-4 py-2 text-xs font-bold text-accent-foreground">
-              جديد تاجر
+              جديد بايع
             </span>
             <h2 className="mt-5 text-3xl font-extrabold md:text-4xl">خدمة المنتجات الحصرية</h2>
             <p className="mt-4 text-muted-foreground">
@@ -329,7 +329,7 @@ function Home() {
       <section className="py-24">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-extrabold md:text-4xl">آلاف البائعين يثقون في تاجر</h2>
+            <h2 className="text-3xl font-extrabold md:text-4xl">آلاف البائعين يثقون في بايع</h2>
           </Reveal>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">

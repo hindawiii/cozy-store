@@ -20,12 +20,12 @@ export const Route = createFileRoute("/products")({
 
   head: () => ({
     meta: [
-      { title: "كتالوج المنتجات | تاجر" },
+      { title: "كتالوج المنتجات | بايع" },
       {
         name: "description",
         content: "تصفح آلاف المنتجات المجربة بهوامش ربح واضحة، وفلترة حسب القسم والسعر والربح.",
       },
-      { property: "og:title", content: "كتالوج المنتجات | تاجر" },
+      { property: "og:title", content: "كتالوج المنتجات | بايع" },
       { property: "og:description", content: "منتجات مجربة بهوامش ربح واضحة وجاهزة للبيع فوراً." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
