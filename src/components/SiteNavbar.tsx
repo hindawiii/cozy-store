@@ -1,19 +1,24 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
-const links = [
+const publicLinks = [
   { label: "الرئيسية", to: "/" },
   { label: "المنتجات", to: "/products" },
   { label: "الأسعار", to: "/pricing" },
-  { label: "لوحة التحكم", to: "/dashboard" },
-];
+] as const;
 
 export function SiteNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -21,6 +26,17 @@ export function SiteNavbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const signOut = async () => {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
+
+  const links = user
+    ? [...publicLinks, { label: "لوحة التحكم", to: "/dashboard" } as const]
+    : publicLinks;
 
   return (
     <header
@@ -48,18 +64,29 @@ export function SiteNavbar() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
-          <Button asChild variant="hero" size="pill">
-            <Link to="/register">ابدأ مجاناً</Link>
-          </Button>
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <>
+              <Button asChild variant="hero" size="pill">
+                <Link to="/dashboard">متجري</Link>
+              </Button>
+              <Button variant="heroOutline" size="pill" onClick={signOut}>
+                خروج
+              </Button>
+            </>
+          ) : (
+            <Button asChild variant="hero" size="pill">
+              <Link to="/auth">ابدأ مجاناً</Link>
+            </Button>
+          )}
         </div>
 
         <button
-          className="md:hidden rounded-lg p-2 text-foreground"
+          className="rounded-lg p-2 text-foreground md:hidden"
           aria-label="القائمة"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <Menu /> : <Menu />}
+          <Menu />
         </button>
       </nav>
 
@@ -88,11 +115,25 @@ export function SiteNavbar() {
                 {l.label}
               </Link>
             ))}
-            <Button asChild variant="hero" size="pill" className="mt-4">
-              <Link to="/register" onClick={() => setOpen(false)}>
-                ابدأ مجاناً
-              </Link>
-            </Button>
+            {user ? (
+              <Button
+                variant="heroOutline"
+                size="pill"
+                className="mt-4"
+                onClick={() => {
+                  setOpen(false);
+                  signOut();
+                }}
+              >
+                تسجيل الخروج
+              </Button>
+            ) : (
+              <Button asChild variant="hero" size="pill" className="mt-4">
+                <Link to="/auth" onClick={() => setOpen(false)}>
+                  ابدأ مجاناً
+                </Link>
+              </Button>
+            )}
           </aside>
         </div>
       )}
