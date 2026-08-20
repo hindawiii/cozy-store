@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Search, SlidersHorizontal, Star } from "lucide-react";
 import { toast } from "sonner";
 import { SiteNavbar } from "@/components/SiteNavbar";
@@ -10,7 +11,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { categories, products, profitPct } from "@/lib/store-data";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { profitPercent, sar } from "@/lib/orders";
 
 type ProductSearch = { cat?: string | undefined };
 
@@ -23,7 +26,7 @@ export const Route = createFileRoute("/products")({
       { title: "كتالوج المنتجات | بايع" },
       {
         name: "description",
-        content: "تصفح آلاف المنتجات المجربة بهوامش ربح واضحة، وفلترة حسب القسم والسعر والربح.",
+        content: "تصفح المنتجات المجربة بهوامش ربح واضحة، وفلترة حسب القسم والسعر والربح.",
       },
       { property: "og:title", content: "كتالوج المنتجات | بايع" },
       { property: "og:description", content: "منتجات مجربة بهوامش ربح واضحة وجاهزة للبيع فوراً." },
@@ -36,6 +39,9 @@ export const Route = createFileRoute("/products")({
 
 function ProductsPage() {
   const { cat } = Route.useSearch();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string[]>(cat ? [cat] : []);
   const [maxPrice, setMaxPrice] = useState(400);
@@ -43,17 +49,63 @@ function ProductsPage() {
   const [highProfit, setHighProfit] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
+  const productsQ = useQuery({
+    queryKey: ["catalog"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const myStoreQ = useQuery({
+    queryKey: ["store-product-ids", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase.from("store_products").select("product_id");
+      if (error) throw error;
+      return data.map((r) => r.product_id);
+    },
+  });
+
+  const addToStore = useMutation({
+    mutationFn: async (productId: string) => {
+      const { error } = await supabase
+        .from("store_products")
+        .insert({ user_id: user!.id, product_id: productId });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["store-product-ids", user?.id] });
+      qc.invalidateQueries({ queryKey: ["store-products"] });
+      qc.invalidateQueries({ queryKey: ["dashboard"] });
+      toast.success("تمت إضافة المنتج إلى متجرك");
+    },
+    onError: () => toast.error("المنتج موجود مسبقاً في متجرك"),
+  });
+
+  const all = productsQ.data ?? [];
+  const categories = useMemo(() => {
+    const map = new Map<string, string>();
+    all.forEach((p) => map.set(p.category, p.emoji));
+    return [...map.entries()].map(([name, emoji]) => ({ name, emoji }));
+  }, [all]);
+
   const list = useMemo(
     () =>
-      products.filter(
+      all.filter(
         (p) =>
           p.name.includes(query.trim()) &&
           (selected.length === 0 || selected.includes(p.category)) &&
-          p.sellingPrice <= maxPrice &&
+          Number(p.selling_price) <= maxPrice &&
           (!inStock || p.stock > 40) &&
-          (!highProfit || profitPct(p) >= 45),
+          (!highProfit || profitPercent(Number(p.selling_price), Number(p.supplier_price)) >= 45),
       ),
-    [query, selected, maxPrice, inStock, highProfit],
+    [all, query, selected, maxPrice, inStock, highProfit],
   );
 
   const toggle = (name: string) =>
@@ -149,51 +201,68 @@ function ProductsPage() {
           </aside>
 
           <div>
-            {list.length === 0 ? (
+            {productsQ.isLoading ? (
+              <div className="card-soft p-16 text-center text-muted-foreground">
+                جاري تحميل الكتالوج...
+              </div>
+            ) : list.length === 0 ? (
               <div className="card-soft p-16 text-center text-muted-foreground">
                 لا توجد منتجات مطابقة لبحثك.
               </div>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {list.map((p) => (
-                  <article
-                    key={p.id}
-                    className="card-soft flex h-full flex-col overflow-hidden hover:-translate-y-2 hover:shadow-card-hover"
-                  >
-                    <div className="relative flex h-44 items-center justify-center bg-accent text-6xl">
-                      {p.emoji}
-                      <span className="absolute top-3 right-3 rounded-full bg-card px-3 py-1 text-xs font-bold">
-                        {p.category}
-                      </span>
-                    </div>
-                    <div className="flex flex-1 flex-col gap-3 p-5">
-                      <h3 className="line-clamp-2 font-bold">{p.name}</h3>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Star className="size-3.5 fill-primary text-primary" />
-                        {p.rating.toFixed(1)} • متوفر {p.stock} قطعة
-                      </div>
-                      <div className="flex items-end justify-between">
-                        <div>
-                          <span className="block text-xs text-muted-foreground line-through">
-                            {p.supplierPrice} ر.س
-                          </span>
-                          <span className="text-lg font-extrabold">{p.sellingPrice} ر.س</span>
-                        </div>
-                        <span className="rounded-full bg-success px-3 py-1 text-xs font-bold text-success-foreground">
-                          ربح {profitPct(p)}%
+                {list.map((p) => {
+                  const added = (myStoreQ.data ?? []).includes(p.id);
+                  return (
+                    <article
+                      key={p.id}
+                      className="card-soft flex h-full flex-col overflow-hidden hover:-translate-y-2 hover:shadow-card-hover"
+                    >
+                      <div className="relative flex h-44 items-center justify-center bg-accent text-6xl">
+                        {p.emoji}
+                        <span className="absolute top-3 right-3 rounded-full bg-card px-3 py-1 text-xs font-bold">
+                          {p.category}
                         </span>
                       </div>
-                      <Button
-                        variant="hero"
-                        size="pill"
-                        className="mt-auto w-full"
-                        onClick={() => toast.success(`تمت إضافة «${p.name}» إلى متجرك`)}
-                      >
-                        أضف لمتجري
-                      </Button>
-                    </div>
-                  </article>
-                ))}
+                      <div className="flex flex-1 flex-col gap-3 p-5">
+                        <h3 className="line-clamp-2 font-bold">{p.name}</h3>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Star className="size-3.5 fill-primary text-primary" />
+                          {Number(p.rating).toFixed(1)} • متوفر {p.stock} قطعة
+                        </div>
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <span className="block text-xs text-muted-foreground line-through">
+                              {sar(Number(p.supplier_price))}
+                            </span>
+                            <span className="text-lg font-extrabold">
+                              {sar(Number(p.selling_price))}
+                            </span>
+                          </div>
+                          <span className="rounded-full bg-success px-3 py-1 text-xs font-bold text-success-foreground">
+                            ربح {profitPercent(Number(p.selling_price), Number(p.supplier_price))}%
+                          </span>
+                        </div>
+                        <Button
+                          variant={added ? "heroOutline" : "hero"}
+                          size="pill"
+                          className="mt-auto w-full"
+                          disabled={added || addToStore.isPending}
+                          onClick={() => {
+                            if (!user) {
+                              toast.info("سجّل الدخول أولاً لإضافة المنتج لمتجرك");
+                              navigate({ to: "/auth" });
+                              return;
+                            }
+                            addToStore.mutate(p.id);
+                          }}
+                        >
+                          {added ? "في متجرك ✓" : "أضف لمتجري"}
+                        </Button>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             )}
           </div>
