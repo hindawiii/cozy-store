@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { profitPercent, sar } from "@/lib/orders";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated/my-store")({
   head: () => ({
@@ -24,6 +25,9 @@ export const Route = createFileRoute("/_authenticated/my-store")({
 
 function MyStorePage() {
   const qc = useQueryClient();
+  const { user } = useAuth();
+  const storeUrl =
+    typeof window !== "undefined" && user ? `${window.location.origin}/store/${user.id}` : "";
 
   const { data, isLoading } = useQuery({
     queryKey: ["store-products"],
@@ -67,6 +71,29 @@ function MyStorePage() {
 
   return (
     <AppShell title="منتجات متجري" subtitle="حدد سعر بيعك وراقب هامش ربحك لكل منتج">
+      <div className="card-soft mb-6 flex flex-wrap items-center justify-between gap-4 p-5">
+        <div className="min-w-0">
+          <p className="font-bold">رابط متجرك للعملاء</p>
+          <p className="truncate text-xs text-muted-foreground">{storeUrl || "..."}</p>
+        </div>
+        <div className="flex gap-2">
+          <Button
+            variant="heroOutline"
+            size="pill"
+            onClick={() => {
+              navigator.clipboard.writeText(storeUrl);
+              toast.success("تم نسخ رابط المتجر");
+            }}
+          >
+            نسخ الرابط
+          </Button>
+          <Button asChild variant="hero" size="pill">
+            <a href={storeUrl} target="_blank" rel="noreferrer">
+              معاينة المتجر
+            </a>
+          </Button>
+        </div>
+      </div>
       {isLoading ? (
         <div className="card-soft p-16 text-center text-muted-foreground">جاري التحميل...</div>
       ) : items.length === 0 ? (

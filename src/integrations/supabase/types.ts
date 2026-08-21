@@ -62,6 +62,7 @@ export type Database = {
           product_id: string
           profit: number | null
           quantity: number
+          source: string
           status: Database["public"]["Enums"]["order_status"]
           supplier_price: number
           unit_price: number
@@ -80,6 +81,7 @@ export type Database = {
           product_id: string
           profit?: number | null
           quantity?: number
+          source?: string
           status?: Database["public"]["Enums"]["order_status"]
           supplier_price: number
           unit_price: number
@@ -98,6 +100,7 @@ export type Database = {
           product_id?: string
           profit?: number | null
           quantity?: number
+          source?: string
           status?: Database["public"]["Enums"]["order_status"]
           supplier_price?: number
           unit_price?: number
@@ -247,6 +250,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_storefront: {
+        Args: { p_seller: string }
+        Returns: {
+          category: string
+          city: string
+          description: string
+          emoji: string
+          name: string
+          price: number
+          product_id: string
+          rating: number
+          stock: number
+          store_name: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
