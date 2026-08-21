@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { profitPercent, sar } from "@/lib/orders";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated/my-store")({
   head: () => ({
@@ -24,6 +25,9 @@ export const Route = createFileRoute("/_authenticated/my-store")({
 
 function MyStorePage() {
   const qc = useQueryClient();
+  const { user } = useAuth();
+  const storeUrl =
+    typeof window !== "undefined" && user ? `${window.location.origin}/store/${user.id}` : "";
 
   const { data, isLoading } = useQuery({
     queryKey: ["store-products"],
