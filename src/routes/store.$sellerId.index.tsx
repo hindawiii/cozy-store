@@ -25,7 +25,7 @@ type StorefrontRow = {
   stock: number;
 };
 
-export const Route = createFileRoute("/store/$sellerId")({
+export const Route = createFileRoute("/store/$sellerId/")({
   head: () => ({
     meta: [
       { title: "متجر إلكتروني | بايع" },
@@ -145,11 +145,23 @@ function StorePage() {
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {rows.map((p) => (
                 <article key={p.product_id} className="card-soft flex flex-col overflow-hidden">
-                  <div className="flex h-40 items-center justify-center bg-accent text-6xl">
+                  <Link
+                    to="/store/$sellerId/product/$productId"
+                    params={{ sellerId, productId: p.product_id }}
+                    className="flex h-40 items-center justify-center bg-accent text-6xl"
+                  >
                     {p.emoji}
-                  </div>
+                  </Link>
                   <div className="flex flex-1 flex-col gap-3 p-5">
-                    <h2 className="line-clamp-2 font-bold">{p.name}</h2>
+                    <h2 className="line-clamp-2 font-bold">
+                      <Link
+                        to="/store/$sellerId/product/$productId"
+                        params={{ sellerId, productId: p.product_id }}
+                        className="hover:text-primary"
+                      >
+                        {p.name}
+                      </Link>
+                    </h2>
                     {p.description ? (
                       <p className="line-clamp-2 text-xs text-muted-foreground">{p.description}</p>
                     ) : null}
