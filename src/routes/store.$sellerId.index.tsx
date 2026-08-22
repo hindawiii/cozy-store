@@ -25,7 +25,7 @@ type StorefrontRow = {
   stock: number;
 };
 
-export const Route = createFileRoute("/store/$sellerId")({
+export const Route = createFileRoute("/store/$sellerId/")({
   head: () => ({
     meta: [
       { title: "متجر إلكتروني | بايع" },
