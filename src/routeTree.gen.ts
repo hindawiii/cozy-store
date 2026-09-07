@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedMyStoreRouteImport } from './routes/_authenticated/my-store'
 import { Route as AuthenticatedOrdersIndexRouteImport } from './routes/_authenticated/orders.index'
@@ -50,6 +51,11 @@ const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/my-store': typeof AuthenticatedMyStoreRoute
   '/orders/$orderId': typeof AuthenticatedOrdersOrderIdRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/my-store': typeof AuthenticatedMyStoreRoute
   '/orders/$orderId': typeof AuthenticatedOrdersOrderIdRoute
@@ -119,6 +127,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/products': typeof ProductsRoute
   '/register': typeof RegisterRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/my-store': typeof AuthenticatedMyStoreRoute
   '/_authenticated/orders/$orderId': typeof AuthenticatedOrdersOrderIdRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/products'
     | '/register'
+    | '/admin'
     | '/dashboard'
     | '/my-store'
     | '/orders/$orderId'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/products'
     | '/register'
+    | '/admin'
     | '/dashboard'
     | '/my-store'
     | '/orders/$orderId'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/products'
     | '/register'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/my-store'
     | '/_authenticated/orders/$orderId'
@@ -224,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -270,6 +289,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMyStoreRoute: typeof AuthenticatedMyStoreRoute
   AuthenticatedOrdersOrderIdRoute: typeof AuthenticatedOrdersOrderIdRoute
@@ -277,6 +297,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMyStoreRoute: AuthenticatedMyStoreRoute,
   AuthenticatedOrdersOrderIdRoute: AuthenticatedOrdersOrderIdRoute,
