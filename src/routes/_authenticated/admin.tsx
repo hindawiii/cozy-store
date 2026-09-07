@@ -429,9 +429,11 @@ function AdminPage() {
                     <TableCell>{sar(Number(o.unit_price) * o.quantity)}</TableCell>
                     <TableCell>{o.source === "customer" ? "متجر العميل" : "التاجر"}</TableCell>
                     <TableCell>
-                      <Badge variant={statusTone(o.status as OrderStatus)}>
-                        {statusLabel(o.status as OrderStatus)}
-                      </Badge>
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-bold ${statusTone[o.status as OrderStatus]}`}
+                      >
+                        {statusLabel[o.status as OrderStatus]}
+                      </span>
                     </TableCell>
                   </TableRow>
                 ))}
