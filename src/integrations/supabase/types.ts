@@ -260,6 +260,7 @@ export type Database = {
           city: string
           description: string
           emoji: string
+          image_url: string
           name: string
           price: number
           product_id: string
