@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components/ProductImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
