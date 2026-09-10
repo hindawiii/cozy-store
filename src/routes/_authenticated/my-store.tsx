@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components/ProductImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
