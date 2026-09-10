@@ -56,7 +56,11 @@ export function SiteFooter() {
           <h3 className="mb-4 text-lg font-bold">الدعم</h3>
           <ul className="space-y-3 text-sm opacity-75">
             {support.map((s) => (
-              <li key={s}>{s}</li>
+              <li key={s.to}>
+                <Link to={s.to} className="transition-opacity hover:opacity-100">
+                  {s.label}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
