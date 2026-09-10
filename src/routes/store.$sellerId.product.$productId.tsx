@@ -119,8 +119,8 @@ function ProductPage() {
         ) : (
           <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
             <section className="space-y-6">
-              <div className="card-soft flex h-72 items-center justify-center bg-accent text-8xl">
-                {product.emoji}
+              <div className="card-soft flex h-72 items-center justify-center overflow-hidden bg-accent text-8xl">
+                <ProductImage src={product.image_url} emoji={product.emoji} alt={product.name} />
               </div>
               <div className="space-y-3">
                 <p className="text-xs text-muted-foreground">{product.category}</p>
