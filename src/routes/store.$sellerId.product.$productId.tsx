@@ -156,7 +156,9 @@ function ProductPage() {
                         params={{ sellerId, productId: r.product_id }}
                         className="card-soft flex flex-col gap-2 p-4"
                       >
-                        <span className="text-4xl">{r.emoji}</span>
+                        <span className="flex h-24 items-center justify-center overflow-hidden rounded-xl bg-accent text-4xl">
+                          <ProductImage src={r.image_url} emoji={r.emoji} alt={r.name} />
+                        </span>
                         <span className="line-clamp-2 text-sm font-semibold">{r.name}</span>
                         <span className="text-sm font-bold">{sar(Number(r.price))}</span>
                       </Link>
