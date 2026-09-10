@@ -112,8 +112,12 @@ function MyStorePage() {
             it.products ? (
               <article key={it.id} className="card-soft flex flex-col gap-3 p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-14 items-center justify-center rounded-2xl bg-accent text-3xl">
-                    {it.products.emoji}
+                  <span className="flex size-14 items-center justify-center overflow-hidden rounded-2xl bg-accent text-3xl">
+                    <ProductImage
+                      src={it.products.image_url}
+                      emoji={it.products.emoji}
+                      alt={it.products.name}
+                    />
                   </span>
                   <div className="min-w-0">
                     <h3 className="truncate font-bold">{it.products.name}</h3>
