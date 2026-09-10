@@ -26,6 +26,8 @@ export function AppShell({
   children: ReactNode;
 }) {
   const { user, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
+  const tabs = isAdmin ? [...baseTabs, adminTab] : [...baseTabs];
 
   return (
     <div className="min-h-screen bg-surface">
