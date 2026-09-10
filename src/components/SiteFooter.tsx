@@ -11,12 +11,11 @@ const quick = [
 ];
 
 const support = [
-  "مركز المساعدة",
-  "تواصل معنا",
-  "الشروط والأحكام",
-  "سياسة الخصوصية",
-  "الأسئلة الشائعة",
-];
+  { label: "تواصل معنا", to: "/contact" },
+  { label: "الشروط والأحكام", to: "/terms" },
+  { label: "سياسة الخصوصية", to: "/privacy" },
+  { label: "الاستبدال والاسترجاع", to: "/refund" },
+] as const;
 
 export function SiteFooter() {
   return (
