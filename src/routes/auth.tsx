@@ -204,6 +204,12 @@ function AuthPage() {
                 <Button type="submit" variant="hero" size="pill" disabled={busy} className="w-full">
                   {busy ? "جاري الدخول..." : "تسجيل الدخول"}
                 </Button>
+                <Link
+                  to="/forgot-password"
+                  className="block text-center text-sm font-bold text-primary"
+                >
+                  نسيت كلمة المرور؟
+                </Link>
                 <GoogleButton label="الدخول عبر Google" />
               </form>
             </TabsContent>
