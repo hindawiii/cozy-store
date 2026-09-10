@@ -35,7 +35,9 @@ function MyStorePage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("store_products")
-        .select("id, custom_price, products(id, name, emoji, category, selling_price, supplier_price)")
+        .select(
+          "id, custom_price, products(id, name, emoji, image_url, category, selling_price, supplier_price)",
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
