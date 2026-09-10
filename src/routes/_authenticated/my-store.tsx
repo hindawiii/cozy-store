@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components/ProductImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Trash2 } from "lucide-react";
@@ -34,7 +35,9 @@ function MyStorePage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("store_products")
-        .select("id, custom_price, products(id, name, emoji, category, selling_price, supplier_price)")
+        .select(
+          "id, custom_price, products(id, name, emoji, image_url, category, selling_price, supplier_price)",
+        )
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
@@ -109,8 +112,12 @@ function MyStorePage() {
             it.products ? (
               <article key={it.id} className="card-soft flex flex-col gap-3 p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-14 items-center justify-center rounded-2xl bg-accent text-3xl">
-                    {it.products.emoji}
+                  <span className="flex size-14 items-center justify-center overflow-hidden rounded-2xl bg-accent text-3xl">
+                    <ProductImage
+                      src={it.products.image_url}
+                      emoji={it.products.emoji}
+                      alt={it.products.name}
+                    />
                   </span>
                   <div className="min-w-0">
                     <h3 className="truncate font-bold">{it.products.name}</h3>

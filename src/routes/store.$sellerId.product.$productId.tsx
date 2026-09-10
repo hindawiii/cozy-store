@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components/ProductImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +19,7 @@ type StorefrontRow = {
   product_id: string;
   name: string;
   emoji: string;
+  image_url: string | null;
   category: string;
   description: string | null;
   price: number;
@@ -117,8 +119,8 @@ function ProductPage() {
         ) : (
           <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
             <section className="space-y-6">
-              <div className="card-soft flex h-72 items-center justify-center bg-accent text-8xl">
-                {product.emoji}
+              <div className="card-soft flex h-72 items-center justify-center overflow-hidden bg-accent text-8xl">
+                <ProductImage src={product.image_url} emoji={product.emoji} alt={product.name} />
               </div>
               <div className="space-y-3">
                 <p className="text-xs text-muted-foreground">{product.category}</p>
@@ -154,7 +156,9 @@ function ProductPage() {
                         params={{ sellerId, productId: r.product_id }}
                         className="card-soft flex flex-col gap-2 p-4"
                       >
-                        <span className="text-4xl">{r.emoji}</span>
+                        <span className="flex h-24 items-center justify-center overflow-hidden rounded-xl bg-accent text-4xl">
+                          <ProductImage src={r.image_url} emoji={r.emoji} alt={r.name} />
+                        </span>
                         <span className="line-clamp-2 text-sm font-semibold">{r.name}</span>
                         <span className="text-sm font-bold">{sar(Number(r.price))}</span>
                       </Link>

@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
@@ -204,6 +204,12 @@ function AuthPage() {
                 <Button type="submit" variant="hero" size="pill" disabled={busy} className="w-full">
                   {busy ? "جاري الدخول..." : "تسجيل الدخول"}
                 </Button>
+                <Link
+                  to="/forgot-password"
+                  className="block text-center text-sm font-bold text-primary"
+                >
+                  نسيت كلمة المرور؟
+                </Link>
                 <GoogleButton label="الدخول عبر Google" />
               </form>
             </TabsContent>

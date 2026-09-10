@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components/ProductImage";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -18,6 +19,7 @@ type StorefrontRow = {
   product_id: string;
   name: string;
   emoji: string;
+  image_url: string | null;
   category: string;
   description: string | null;
   price: number;
@@ -148,9 +150,9 @@ function StorePage() {
                   <Link
                     to="/store/$sellerId/product/$productId"
                     params={{ sellerId, productId: p.product_id }}
-                    className="flex h-40 items-center justify-center bg-accent text-6xl"
+                    className="flex h-40 items-center justify-center overflow-hidden bg-accent text-6xl"
                   >
-                    {p.emoji}
+                    <ProductImage src={p.image_url} emoji={p.emoji} alt={p.name} />
                   </Link>
                   <div className="flex flex-1 flex-col gap-3 p-5">
                     <h2 className="line-clamp-2 font-bold">

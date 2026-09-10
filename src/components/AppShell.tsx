@@ -1,17 +1,20 @@
 import { Link } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, Package, ShoppingBag, Store } from "lucide-react";
+import { LayoutDashboard, LogOut, Package, Settings, ShoppingBag, Store } from "lucide-react";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNavbar } from "@/components/SiteNavbar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import type { ReactNode } from "react";
 
-const tabs = [
+const baseTabs = [
   { to: "/dashboard", label: "لوحة التحكم", icon: LayoutDashboard },
   { to: "/orders", label: "الطلبات", icon: ShoppingBag },
   { to: "/my-store", label: "منتجاتي", icon: Store },
   { to: "/products", label: "الكتالوج", icon: Package },
 ] as const;
+
+const adminTab = { to: "/admin", label: "الإدارة", icon: Settings } as const;
 
 export function AppShell({
   title,
@@ -23,6 +26,8 @@ export function AppShell({
   children: ReactNode;
 }) {
   const { user, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
+  const tabs = isAdmin ? [...baseTabs, adminTab] : [...baseTabs];
 
   return (
     <div className="min-h-screen bg-surface">
