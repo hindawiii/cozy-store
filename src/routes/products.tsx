@@ -219,8 +219,8 @@ function ProductsPage() {
                       key={p.id}
                       className="card-soft flex h-full flex-col overflow-hidden hover:-translate-y-2 hover:shadow-card-hover"
                     >
-                      <div className="relative flex h-44 items-center justify-center bg-accent text-6xl">
-                        {p.emoji}
+                      <div className="relative flex h-44 items-center justify-center overflow-hidden bg-accent text-6xl">
+                        <ProductImage src={p.image_url} emoji={p.emoji} alt={p.name} />
                         <span className="absolute top-3 right-3 rounded-full bg-card px-3 py-1 text-xs font-bold">
                           {p.category}
                         </span>
