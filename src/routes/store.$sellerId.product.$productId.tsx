@@ -19,6 +19,7 @@ type StorefrontRow = {
   product_id: string;
   name: string;
   emoji: string;
+  image_url: string | null;
   category: string;
   description: string | null;
   price: number;
