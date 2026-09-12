@@ -302,19 +302,19 @@ function Home() {
           </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.slice(0, 4).map((p, i) => (
+            {featured.map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
                 <article className="card-soft h-full overflow-hidden hover:-translate-y-2 hover:shadow-card-hover">
-                  <div className="flex h-40 items-center justify-center bg-accent text-6xl">
-                    {p.emoji}
+                  <div className="flex h-40 items-center justify-center overflow-hidden bg-accent text-6xl">
+                    <ProductImage src={p.image_url} emoji={p.emoji} alt={p.name} />
                   </div>
                   <div className="space-y-2 p-5">
                     <span className="text-xs font-bold text-primary">{p.category}</span>
                     <h3 className="line-clamp-2 font-bold">{p.name}</h3>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-extrabold">{p.sellingPrice} ر.س</span>
+                      <span className="text-lg font-extrabold">{p.selling_price} ر.س</span>
                       <span className="rounded-full bg-success px-3 py-1 text-xs font-bold text-success-foreground">
-                        ربح {profitPct(p)}%
+                        ربح {profitPercent(Number(p.selling_price), Number(p.supplier_price))}%
                       </span>
                     </div>
                   </div>
