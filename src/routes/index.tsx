@@ -14,7 +14,11 @@ import { SiteNavbar } from "@/components/SiteNavbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CountUp, Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { categories, products, profitPct } from "@/lib/store-data";
+import { ProductImage } from "@/components/ProductImage";
+import { categories } from "@/lib/store-data";
+import { profitPercent } from "@/lib/orders";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -80,7 +84,32 @@ const testimonials = [
   },
 ];
 
+type FeaturedProduct = {
+  id: string;
+  name: string;
+  category: string;
+  emoji: string;
+  image_url: string | null;
+  selling_price: number;
+  supplier_price: number;
+};
+
 function Home() {
+  const featuredQ = useQuery({
+    queryKey: ["featured-products"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("id, name, category, emoji, image_url, selling_price, supplier_price")
+        .eq("is_active", true)
+        .order("rating", { ascending: false })
+        .limit(4);
+      if (error) throw error;
+      return (data ?? []) as FeaturedProduct[];
+    },
+  });
+  const featured = featuredQ.data ?? [];
+
   return (
     <div className="min-h-screen bg-background">
       <SiteNavbar />
@@ -302,19 +331,19 @@ function Home() {
           </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.slice(0, 4).map((p, i) => (
+            {featured.map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
                 <article className="card-soft h-full overflow-hidden hover:-translate-y-2 hover:shadow-card-hover">
-                  <div className="flex h-40 items-center justify-center bg-accent text-6xl">
-                    {p.emoji}
+                  <div className="flex h-40 items-center justify-center overflow-hidden bg-accent text-6xl">
+                    <ProductImage src={p.image_url} emoji={p.emoji} alt={p.name} />
                   </div>
                   <div className="space-y-2 p-5">
                     <span className="text-xs font-bold text-primary">{p.category}</span>
                     <h3 className="line-clamp-2 font-bold">{p.name}</h3>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-extrabold">{p.sellingPrice} ر.س</span>
+                      <span className="text-lg font-extrabold">{p.selling_price} ر.س</span>
                       <span className="rounded-full bg-success px-3 py-1 text-xs font-bold text-success-foreground">
-                        ربح {profitPct(p)}%
+                        ربح {profitPercent(Number(p.selling_price), Number(p.supplier_price))}%
                       </span>
                     </div>
                   </div>
