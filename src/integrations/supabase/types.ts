@@ -51,58 +51,70 @@ export type Database = {
       }
       orders: {
         Row: {
+          carrier: string | null
           created_at: string
           customer_address: string | null
           customer_city: string
           customer_name: string
           customer_phone: string
+          delivered_at: string | null
           id: string
           notes: string | null
           order_number: number
           product_id: string
           profit: number | null
           quantity: number
+          shipped_at: string | null
           source: string
           status: Database["public"]["Enums"]["order_status"]
           supplier_price: number
+          tracking_number: string | null
           unit_price: number
           updated_at: string
           user_id: string
         }
         Insert: {
+          carrier?: string | null
           created_at?: string
           customer_address?: string | null
           customer_city: string
           customer_name: string
           customer_phone: string
+          delivered_at?: string | null
           id?: string
           notes?: string | null
           order_number?: number
           product_id: string
           profit?: number | null
           quantity?: number
+          shipped_at?: string | null
           source?: string
           status?: Database["public"]["Enums"]["order_status"]
           supplier_price: number
+          tracking_number?: string | null
           unit_price: number
           updated_at?: string
           user_id: string
         }
         Update: {
+          carrier?: string | null
           created_at?: string
           customer_address?: string | null
           customer_city?: string
           customer_name?: string
           customer_phone?: string
+          delivered_at?: string | null
           id?: string
           notes?: string | null
           order_number?: number
           product_id?: string
           profit?: number | null
           quantity?: number
+          shipped_at?: string | null
           source?: string
           status?: Database["public"]["Enums"]["order_status"]
           supplier_price?: number
+          tracking_number?: string | null
           unit_price?: number
           updated_at?: string
           user_id?: string
@@ -248,6 +260,48 @@ export type Database = {
         }
         Relationships: []
       }
+      withdrawals: {
+        Row: {
+          account_name: string | null
+          admin_note: string | null
+          amount: number
+          created_at: string
+          iban: string | null
+          id: string
+          method: string
+          note: string | null
+          status: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_name?: string | null
+          admin_note?: string | null
+          amount: number
+          created_at?: string
+          iban?: string | null
+          id?: string
+          method?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_name?: string | null
+          admin_note?: string | null
+          amount?: number
+          created_at?: string
+          iban?: string | null
+          id?: string
+          method?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -287,6 +341,7 @@ export type Database = {
         | "delivered"
         | "returned"
         | "cancelled"
+      withdrawal_status: "pending" | "approved" | "paid" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -423,6 +478,7 @@ export const Constants = {
         "returned",
         "cancelled",
       ],
+      withdrawal_status: ["pending", "approved", "paid", "rejected"],
     },
   },
 } as const
