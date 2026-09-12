@@ -14,7 +14,11 @@ import { SiteNavbar } from "@/components/SiteNavbar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CountUp, Reveal } from "@/components/Reveal";
 import { Button } from "@/components/ui/button";
-import { categories, products, profitPct } from "@/lib/store-data";
+import { ProductImage } from "@/components/ProductImage";
+import { categories } from "@/lib/store-data";
+import { profitPercent } from "@/lib/orders";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   head: () => ({
