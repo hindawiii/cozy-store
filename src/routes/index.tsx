@@ -84,7 +84,32 @@ const testimonials = [
   },
 ];
 
+type FeaturedProduct = {
+  id: string;
+  name: string;
+  category: string;
+  emoji: string;
+  image_url: string | null;
+  selling_price: number;
+  supplier_price: number;
+};
+
 function Home() {
+  const featuredQ = useQuery({
+    queryKey: ["featured-products"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("id, name, category, emoji, image_url, selling_price, supplier_price")
+        .eq("is_active", true)
+        .order("rating", { ascending: false })
+        .limit(4);
+      if (error) throw error;
+      return (data ?? []) as FeaturedProduct[];
+    },
+  });
+  const featured = featuredQ.data ?? [];
+
   return (
     <div className="min-h-screen bg-background">
       <SiteNavbar />
